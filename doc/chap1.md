@@ -35,3 +35,32 @@
   - 쿠키 삭제
   - `SecurityContextHolder.clearContext()`: SecurityContext 삭제
 - `SimpleUrlLogoutSuccessHandler`: 로그아웃 성공 시 작동해 설정 페이지로 리다이렉션
+
+
+---
+
+
+### Remember Me 인증
+- 세션이 만료되고 웹 브라우저가 종료된 이후에도 어플리케이션이 사용자를 기억하는 기능
+  - ex. 자동로그인
+
+- Remember-Me 쿠키에 대한 HTTP 요청 확인 후 토큰기반 인증 사용해 유효성 검사
+  - -> 검증되면 로그인
+
+#### 사용자 라이프 사이클
+- 인증 성공: Remember-Me 쿠키 설정
+- 인증 실패: 쿠키 존재 시 쿠키 무효화
+- 로그아웃: 쿠키 존재 시 쿠키 무효화
+
+
+---
+
+
+### AnonymousAuthenticationFilter 익명 사용자 인증 처리 필터
+- 인증을 받은 특정 사용자 -> 세션에 인증 객체 저장 -> 세션에서 인증정보 조회해서 접근판단
+  - => 매번 조회??
+- 익명 사용자와 인증 사용자를 구분해 처리하기 위해 사용
+- 화면에서 인증 여부 구현 시 `isAnonymous()` / `isAuthenticated()` 구분해 사용
+  - 익명 사용자여도 _null_ 로 처리하는게 아닌 익명사용자 객체를 생성해 인증사용자처럼 **ROLE** 저장해 사용
+- 인증 객체를 세션에 저장하지 않음
+
